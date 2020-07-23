@@ -6,6 +6,7 @@ Node.js app that calculates and prints the total cost of all the items listed by
 - [Availabe scripts](#available-scripts)
 - [About](#about)
 - [Details](#details)
+- [Other libraries](#other-libraries)
 
 ---
 
@@ -29,6 +30,10 @@ Runs the app in production mode.
 ### `npm test`
 
 Launches the test runner. This package uses mocha for testing.
+
+### `npm run-script docs`
+
+Runs jsdoc and creates documentation in the `out/` directory
 
 
 
@@ -57,3 +62,13 @@ Apple     $0.89
 At the cash counter the items are accepted in any order. So at the cash counter the order of items can be in the order of Bread, Banana, Milk, Apple, Bread and then Milk. Notice that quantity of the Milk is 2 and this week there is a sale on milk if 2 bottles of milk are purchased. So the price applied for milk should be $5.00.
 
 Also note that if the user buys three bottles of milk then for the first two bottles of milk the user should get the sale price and on the third bottle of milk the user should get the unit price.
+
+## Other libraries
+
+This project uses: 
+- [Numeral.js](https://github.com/adamwdraper/Numeral-js) - For printing numbers
+- [prompt](https://github.com/flatiron/prompt) - for user prompt
+- [jsdoc](https://github.com/jsdoc/jsdoc) - to generate documentation
+- [Mocha](https://github.com/mochajs/mocha) - for testing
+
+
