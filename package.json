@@ -21,6 +21,7 @@
     "mocha": "^8.0.1"
   },
   "dependencies": {
+    "numeral": "^2.0.6",
     "prompt": "^1.0.0"
   }
 }
