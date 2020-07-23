@@ -5,7 +5,7 @@
  */
 
 const prompt = require("prompt");
-const PriceTable = require("./PriceTable");
+const PriceCalculator = require('./PriceCalculator');
 
 
 // Set prompt schema
@@ -22,16 +22,26 @@ var schema = {
 };
 
 
+//
+prompt.message = "";
+
 // Start the prompt
 prompt.start();
+
+
 
 
 // Get list of items from the user
 prompt.get(schema, (err, result) => {
 
   // 1. Parse list of items
+  const items = PriceCalculator.stringToNormalizedArray(result.items);
   // 2. Get count of items
+  const countedItems = PriceCalculator.countItems(items);
   // 3. Calculate costs
+  const allCosts = PriceCalculator.calculateCost(countedItems);
   // 4. Print receipt
-  console.log(result);
+  PriceCalculator.printReceipt(allCosts);
+
+  
 });
