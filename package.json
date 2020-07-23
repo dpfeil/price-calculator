@@ -4,6 +4,7 @@
   "description": "Node.js app that calculates and prints the total cost of all the items listed by the user.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha"
   },
   "repository": {
@@ -18,5 +19,8 @@
   "homepage": "https://github.com/dpfeil/price-calculator#readme",
   "devDependencies": {
     "mocha": "^8.0.1"
+  },
+  "dependencies": {
+    "prompt": "^1.0.0"
   }
 }
