@@ -1,28 +1,46 @@
 const numeral = require("numeral");
 const PriceTable = require("./PriceTable");
 
+
 /**
+ * Returns the USD currencey format ($0,000.00) for supplied number
+ * @param {number} amount - any dollar amount as a numbers
+ * @returns {string} USD formatted string
+ */
+const formatMoney = (amount) => numeral(amount).format("($0,000.00)");
+
+/**
+ * PriceCalculator.js
  * Contains all functionality required to calculate
  * prices based on a string of items from the store.
+ * @class
+ * @hideconstructor
  */
-class PriceCalculator {
+class PriceCalculator {;
 
   /**
    * Takes the received string of items and returns a 
-   * normalize array of strings
-   * @param {string} itemString
-   * @returns {string[]} array of strings
+   * normalized array of strings
+   * @function
+   * @param {string} itemString - string of items separated by comma
+   * @returns {string[]} array of item strings
    */
   static stringToNormalizedArray = (itemString) => {
-    // Split the string of items to array of lowercase strings
-    return itemString.split(',').map(d => d.toLowerCase().trim()).filter(d => d != "");
+    
+    const items = 
+      itemString.split(',') // split on ',' into array
+        .map(d => d.toLowerCase().trim()) // normalize strings
+        .filter(d => d in PriceTable); // remove items not in Price Table
+
+    return items;
   };
 
   /**
    * Returns a key-value Object from an array of items 
    * where the key is the item and the value is the count 
    * of that item.
-   * @param {string[]} items 
+   * @function
+   * @param {string[]} items - array of item strings
    * @returns {Object} Key-value item count
    */
   static countItems = (items) => {
@@ -36,10 +54,11 @@ class PriceCalculator {
   };
 
   /**
-   * Calculates and returns an Object including costs 
-   * for each item and total list and sale prices calculated
+   * Returns an Object including costs for each item 
+   * and total list and sale prices calculated
    * from the PriceTable
-   * @param {Object} countedItems 
+   * @function
+   * @param {Object} countedItems - Object key-value store of item and count
    * @returns {Object} Object including cost of each item and total costs
    */
   static calculateCost = (countedItems) => {
@@ -65,26 +84,37 @@ class PriceCalculator {
 
 
   /**
-   * Outputs the receipt for the items to them console.
-   * @param {Object} allCosts 
+   * Creates a string of the receipt for the items.
+   * @function
+   * @static
+   * @param {Object} allCosts - Objects of costs per item and total costs
+   * @returns {string} receipt
    */
   static printReceipt = (allCosts) => {
-
     const {costs, totalListPrice, totalSalePrice} = allCosts;
-    console.log("Item\t  Quantity\tPrice");
-    console.log("--------------------------------------");
-    for(var item in costs) {
-      const itemData = PriceTable[item];
-      const itemCost = costs[item];
-      console.log(`${itemData["label"]}\t  ${itemCost["count"]}\t\t${numeral(itemCost["salePrice"]).format("$(0,000.00)")}`);
+    let output = "";
+    if(Object.keys(costs).length === 0) {
+      output += "You purchased no items today.\n";
+    } else {
+      output += "Item\t  Quantity\tPrice\n"
+      + "--------------------------------------\n";
+      let items = Object.keys(costs);
+
+      // sort items by
+      items.sort((a,b) => (costs[b]['salePrice'] - costs[a]['salePrice']));
+      items.forEach((item) => {
+        const itemData = PriceTable[item];
+        const itemCost = costs[item];
+        output += `${itemData["label"]}\t  ${itemCost["count"]}\t\t${formatMoney(itemCost["salePrice"])}\n`;
+      });
     }
-    console.log("");
-    console.log(`Total price : ${numeral(totalSalePrice).format("($0,000.00)")}`);
-    console.log(`You saved ${numeral(totalListPrice - totalSalePrice).format("($0,000.00)")} today.`);
+    output += "\n"
+    + `Total price: ${formatMoney(totalSalePrice)}\n`
+    + `You saved ${formatMoney(totalListPrice - totalSalePrice)} today.`;
+
+    return output;
   }
-  
 
-}
-
+};
 
 module.exports = PriceCalculator;
