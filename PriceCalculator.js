@@ -25,7 +25,7 @@ class PriceCalculator {;
    * @param {string} itemString - string of items separated by comma
    * @returns {string[]} array of item strings
    */
-  static stringToNormalizedArray = (itemString) => {
+  static stringToNormalizedArray(itemString) {
     
     const items = 
       itemString.split(',') // split on ',' into array
@@ -43,7 +43,7 @@ class PriceCalculator {;
    * @param {string[]} items - array of item strings
    * @returns {Object} Key-value item count
    */
-  static countItems = (items) => {
+  static countItems(items) {
     let countedItems = {};
     for(let i = 0; i < items.length; i++) {
       let item = items[i];
@@ -61,7 +61,7 @@ class PriceCalculator {;
    * @param {Object} countedItems - Object key-value store of item and count
    * @returns {Object} Object including cost of each item and total costs
    */
-  static calculateCost = (countedItems) => {
+  static calculateCost(countedItems) {
     let totalListPrice = 0;
     let totalSalePrice = 0;
     let costs = {};
@@ -86,11 +86,10 @@ class PriceCalculator {;
   /**
    * Creates a string of the receipt for the items.
    * @function
-   * @static
    * @param {Object} allCosts - Objects of costs per item and total costs
    * @returns {string} receipt
    */
-  static printReceipt = (allCosts) => {
+  static printReceipt(allCosts) {
     const {costs, totalListPrice, totalSalePrice} = allCosts;
     let output = "";
     if(Object.keys(costs).length === 0) {
