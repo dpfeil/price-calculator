@@ -20,7 +20,7 @@
   "homepage": "https://github.com/dpfeil/price-calculator#readme",
   "devDependencies": {
     "jsdoc": "^3.6.5",
-    "mocha": "^8.0.1"
+    "mocha": "^8.4.0"
   },
   "dependencies": {
     "numeral": "^2.0.6",
